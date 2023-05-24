@@ -1,0 +1,32 @@
+import requests
+from bs4 import BeautifulSoup
+
+HEADERS = ({'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) \AppleWebKit/537.36 (KHTML, like Gecko) \Chrome/90.0.4430.212 Safari/537.36','Accept-Language': 'en-US, en;q=0.5'})
+
+# Scrape the data
+def getdata(site_url):
+  res = requests.get(site_url, headers=HEADERS)
+  return res.text
+
+def gethtml(site_url):
+# pass the url into getdata function
+  data = getdata(site_url)
+  soup = BeautifulSoup(data, 'html.parser')
+  return (soup)
+
+site_url="https://www.flipkart.com/realme-10-pro-5g-nebula-blue-128-gb/p/itm1e672d12a252e?pid=MOBGK8VHHFY5VCAY&lid=LSTMOBGK8VHHFY5VCAYOXEXVI&marketplace=FLIPKART&q=realme+mobile+5g&store=tyy%2F4io&srno=s_1_2&otracker=AS_QueryStore_OrganicAutoSuggest_1_6_na_na_ps&otracker1=AS_QueryStore_OrganicAutoSuggest_1_6_na_na_ps&fm=organic&iid=9924a939-fca6-4333-b603-40e2c2ea2421.MOBGK8VHHFY5VCAY.SEARCH&ppt=hp&ppn=homepage&ssid=3enf0wk00w0000001684935447047&qH=8ab5e6d477d4aa01"
+soup = gethtml(site_url)
+
+def getCustomerName(soup):
+ # find the Html tag with find() and convert into string
+ data_string = ""
+ customer_list = []
+
+ for item in soup.find_all("span", class_="a-profile-name"):
+   data_string = data_string + item.get_text()
+   customer_list.append(data_string)
+   data_string = ""
+ return customer_list
+
+customer_res = getCustomerName(soup)
+print(customer_res)
