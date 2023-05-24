@@ -1,0 +1,48 @@
+import pandas as pd
+import numpy as np
+
+data = pd.read_csv(r"C:\Users\pranv\OneDrive\Desktop\dsbda\datasets\dataset_facebook.csv")
+
+data
+
+data.shape
+
+data = data.dropna()
+data
+
+col1 = data.iloc[:,:8]
+col1
+
+col1.shape
+
+col2 = data.iloc[:,7:14]
+col2
+
+col2.shape
+
+subset1 = data.iloc[:200]
+subset1
+
+subset1.shape
+
+subset2 = data.iloc[200:]
+subset2
+
+subset2.shape
+
+merged_data = pd.merge(col1, col2)
+merged_data
+
+merged_data.shape
+
+merged_data2 = pd.concat([subset1,subset2])
+merged_data2
+
+merged_data2.shape
+
+subset1.sort_values(by="Post Hour")
+
+transpose = subset1.transpose()
+transpose.head(15)
+
+col1.melt(id_vars="Type", value_vars=["Category","Post Hour"])
