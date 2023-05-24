@@ -1,0 +1,71 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn
+
+file= pd.read_csv(r"C:\Users\pranv\OneDrive\Desktop\dsbda\datasets\airquality.csv")
+file
+
+file["Ozone"]= file["Ozone"].fillna(file["Ozone"].mean())
+file["Solar.R"]= file["Solar.R"].fillna(file["Solar.R"].mean())
+
+file
+
+plt.pie([file["Ozone"].mean(), file["Solar.R"].mean(), file["Wind"].mean(), file["Temp"].mean()], autopct="%1.2f%%", explode=[0.01, 0.01, 0.01,0.01], labels=["Ozone", "Solar.R", "Wind", "Temp"])
+plt.plot()
+
+def addlabels(): 
+    for i in range(len(file.iloc[0:31, 4])):
+        plt.text(i, file.iloc[0:31, 4][i], file.iloc[0:31, 4][i], ha="center")
+        
+y= np.arange(len(file.iloc[0:31,4]))
+addlabels()
+plt.bar(x=y, height= file.iloc[0:31, 4], tick_label=y, color="blue")
+plt.title("Temperature for May")
+plt.xlabel("Days")
+plt.ylabel("Temperature")
+plt.show()
+
+plt.boxplot(x= file[["Ozone","Solar.R", "Wind","Temp"]], labels=["Ozone","Solar.R", "Wind","Temp"])
+plt.plot()
+
+plt.hist(x=file["Temp"], bins=20, color="purple", label="Temp")
+plt.title("Temperature count")
+plt.xlabel("Temperature")
+plt.ylabel("Count")
+plt.show()
+
+plt.plot(file.iloc[0: 30, 6], file.iloc[0:30, 4], color="orange")
+plt.title("Temp of May month")
+plt.xlabel("Day")
+plt.ylabel("Temp")
+
+plt.scatter(file.iloc[0:30, 6], file.iloc[0: 30, 3], color="red")
+plt.title("Wind of May month")
+plt.xlabel("Day")
+plt.ylabel("Wind")
+
+seaborn.heatmap(data=file.iloc[0:38, [1,2,3,4]])
+plt.show()
+
+seaborn.pairplot(file.iloc[:, [1,2,3,4,7]], hue="Humidity")
+plt.show()
+
+with open("text.txt", "r") as file:
+text = file.read()
+print(text)
+
+from wordcloud import WordCloud, STOPWORDS
+stopwords= set(STOPWORDS)
+
+text = """some random text here some random text here some random text here some random text here some random text here some random text here some random text here some random text here some random text here some random text here some random text here some random text here"""
+
+wordcloud= WordCloud(width= 2500, height= 2500,
+                    background_color= 'red',
+                    stopwords= stopwords,
+                    min_font_size= 16).generate(text)
+plt.figure(figsize = (5, 5))
+plt.imshow(wordcloud)
+plt.axis("off")
+plt.tight_layout(pad = 0)
+plt.show()
