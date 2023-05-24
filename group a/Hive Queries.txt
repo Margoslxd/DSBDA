@@ -13,7 +13,7 @@ CREATE TABLE flight_info (
   arrival_delay INT
 );
 
-ALTER TABLE flight_info ADD COLUMN cancelled BOOLEAN;
+ALTER TABLE flight_info ADD COLUMNS (cancelled BOOLEAN);
 
 ALTER TABLE flight_info RENAME TO flight_info_2023;
 
